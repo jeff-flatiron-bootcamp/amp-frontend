@@ -22,6 +22,7 @@ export default class CreateAccount extends Component {
         user: {
           username: this.state.nameSignup,
           password: this.state.passwordSignup,
+          admin: false
         },
       }),
     })
@@ -32,6 +33,7 @@ export default class CreateAccount extends Component {
         if (json.status == 200) {
           localStorage.setItem("token", json.jwt);
           // this.storeToken(json)      
+          localStorage.setItem("user", JSON.stringify(json.user));
           
           this.props.onStoreUser(json.user)
           if (json.user.admin) {
@@ -52,7 +54,7 @@ export default class CreateAccount extends Component {
   render() {
     return (
       <div className="col-md-6 login-form-2">
-        <h3>AMP-Signup!</h3>
+        <h3>AMP-Create Account</h3>
         <form onSubmit={this.handleCreateUser}>
           <div className="form-group">
             <input

@@ -13,6 +13,8 @@ import AdminLease from './components/adminLeases'
 import RenterLease from './components/renterLease'
 import RenterPaymentHistory from './components/renterPaymentHistory'
 import AdminPaymentHistory from './components/adminPaymentHistory'
+import AdminNewLease from './components/adminNewLease'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class App extends Component {
   state = {
@@ -29,17 +31,6 @@ export default class App extends Component {
     localStorage.clear();
     
   };
-
-  // conditionalRender = () => {
-  //   if(localStorage.getItem("token"))
-  //   {
-
-  //   }
-  //   else
-  //   {
-
-  //   }
-  // }
 
   storeUser = (userToStore, token) => {    
     this.setState({user: userToStore})
@@ -63,6 +54,7 @@ export default class App extends Component {
             <Route exact path="/renter_payment_history" component={RenterPaymentHistory} />
             <Route exact path="/admin_payment_history" component={AdminPaymentHistory} />
             <Route exact path="/logged_out" component={LoggedOut} />
+            <Route exact path="/admin_new_lease" render={(props) => <AdminNewLease {...props} /> }/>
             {/* <Route exact path="/"> <Redirect to="/login" /></Route> */}
             {/* <Route path="/login" component={Login} /> */}
             

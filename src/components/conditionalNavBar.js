@@ -24,7 +24,7 @@ class ConditionalNavBar extends PureComponent {
   renderLoggedInNav = () => {
     
     let localStorageUser = JSON.parse(localStorage.getItem('user'))
-    debugger
+    
     //if (this.props.user.admin) {
     if(localStorageUser.admin){
       return (

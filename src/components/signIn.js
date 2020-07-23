@@ -4,6 +4,7 @@ class SignIn extends Component {
   state = {
     nameLogin: "",
     passwordLogin: "",
+    info: ""
   };
 
   handleLogin = (event) => {
@@ -31,12 +32,18 @@ class SignIn extends Component {
           localStorage.setItem("token", json.jwt);
           // this.storeToken(json)      
           localStorage.setItem("user", JSON.stringify(json.user));
+          this.setState({info: ""})
           this.props.onStoreUser(json.user)
           if (json.user.admin) {
             this.props.history.push("/profile");
           } else {
             this.props.history.push("/profile");
           }
+        }
+        else
+        {
+          let failMessage = `${json.statusmessage}. Please try again.`
+          this.setState({info: failMessage})
         }
       });
   };
@@ -55,7 +62,7 @@ class SignIn extends Component {
   render() {
     return (
       <div className="col-md-6 login-form-1">
-        <h3>AMP-Login!</h3>
+        <h3>AMP-Login</h3>
         <form onSubmit={this.handleLogin}>
           <div className="form-group">
             <input
@@ -80,6 +87,8 @@ class SignIn extends Component {
           <div className="form-group">
             <input type="submit" className="btnSubmit" value="Sign In" />
           </div>
+
+          <label style={{ color: 'red' }}>{this.state.info}</label>
         </form>
       </div>
     );

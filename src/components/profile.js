@@ -9,6 +9,7 @@ class Profile extends PureComponent {
       lastName: "",
       email: "",
       phone: "",
+      info: ""
     };
   }
   
@@ -37,7 +38,17 @@ class Profile extends PureComponent {
     .then(data => {
       
       console.log(data)
-      this.updateState(data);
+      if(data.status == 204)
+      {
+        this.updateState(data);
+        let successMessage = `${data.statusmessage}.`
+        this.setState({info: successMessage})
+      }
+      else
+      {
+        let failMessage = `${data.statusmessage}. Please try again.`
+        this.setState({info: failMessage})
+      }
     })
   }
 
@@ -54,6 +65,7 @@ class Profile extends PureComponent {
     .then(data => {
       console.log(data)      
       this.updateState(data);
+
     })
   }
 
@@ -141,6 +153,7 @@ class Profile extends PureComponent {
             <input type="submit" className="btnSubmit" value="Save Changes" />
           </div>
         </form>
+        <label style={{ color: 'red' }}>{this.state.info}</label>
       </div>
       </Fragment>
     );

@@ -128,6 +128,8 @@ class AdminPaymentHistory extends React.Component {
           <h3>Payment History</h3>                              
           <select value={this.state.selected_user} onChange={this.handleUserSelection}>{this.populateUsers()}</select>    
           <br></br>     
+          <br></br>   
+          
           <table id='payments'>
              <tbody>
                 <tr>{this.renderTableHeader()}</tr>

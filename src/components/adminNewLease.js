@@ -1,33 +1,425 @@
-import Modal from 'react-bootstrap/Modal'
+import React, { Fragment } from "react";
+import { withRouter } from 'react-router-dom';
+import DatePicker from "react-datepicker"; 
+import "react-datepicker/dist/react-datepicker.css";
+import CurrencyInput from 'react-currency-input';
 
-function Example() {
-    const [show, setShow] = useState(false);
+class AdminNewLease extends React.Component {
+  constructor(){
+    super()
+    this.URL = "http://localhost:3000/api/v1/";
+    this.state = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      ssn: "",
+      apartment: "",
+      nameOnCard: "",
+      ccn: "",
+      ccv: "",
+      exp_date: "",
+      monthlyRent: 0.00,
+      firstMonthRent: 0.00,
+      securityDeposit: 0.00,
+      lastMonthRent: 0.00,
+      total: 0.00,
+      users: [],
+      selectedUser: {},
+      selectedPropertyAddress: {},
+      properties: [],
+      selectedLeaseType: {},
+      leaseTypes: [],
+      start_date: new Date(),
+      end_date: new Date(),
+      info: ""
+    };
+  }
+
+  handleCurrencyChange = (event, maskedvalue, floatvalue) => {    
+    this.setState({[event.target.name]: floatvalue}, this.generateTotal);    
+}
+
+  populateUsers = () => {
+    return this.state.users.map((user) => <option key={user.id} value={user.id}>{`${user.id}-${user.username}-${user.firstname} ${user.lastname}`}</option>)
+  }
+
+  handleUserSelection = (e) => {  
+    
+    this.setState({selectedUser:e.target.value});
+  }
+
+  populateLeaseTypes = () => {
+    return this.state.leaseTypes.map((leaseType) => <option key={leaseType.id} value={leaseType.id}>{`LeaseTypeId#${leaseType.id}-LeaseType#${leaseType.lease_type}`}</option>)
+  }
+
+  handleLeaseTypeSelection = (e) => {
+    
+    this.setState({selectedLeaseType:e.target.value});
+  }
+
+  populateProperties = () => {
+    return this.state.properties.map((property) => <option key={property.id} value={property.id}>{`PropertyId#${property.id}-APT#${property.apartment}`}</option>)
+  }
+
+  handlePropertyAddressSelection = (e) => {    
+    
+    this.setState({selectedPropertyAddress:e.target.value});
+  }
+
+  handleChange = (event) => {    
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+    
+  };
+
+  handleStartDateChange = (date) => {    
+    this.setState({
+      start_date: date
+    });
+  }
+
+  handleEndDateChange = (date) => {
+    this.setState({
+      end_date: date
+    });
+  }
+
+  handleDateChange = (date,event) => {    
+    this.setState({
+      [event.target.name]: date
+    });
+  };
+
+  generateTotal()
+  {
+    const {firstMonthRent, lastMonthRent, securityDeposit} = this.state    
+    let temp_total = firstMonthRent + lastMonthRent + securityDeposit
+    this.setState({total: temp_total})
+  }
+
+  adminGetAllUsers = () => {
+    let token = localStorage.getItem('token');   
+    let allUsers = []; 
+    fetch(`${this.URL}admin_get_all_users`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`, 
+      }             
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)        
+      if(data.users){
+        allUsers = data.users.map((renter) =>
+        {
+          return renter;
+        });
+      }
+      console.log(allUsers)
+      this.setState({
+        users: allUsers,
+    });
+    })
+}
+
+adminGetAllLeaseTypes = (event) => {    
+  this.setState({textAreaValue: "handleAdminGetAllLeaseTypes"});        
+  let token = localStorage.getItem('token');   
+  let allLeasesTypes = []; 
+  fetch(`${this.URL}admin_get_all_lease_types`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`, 
+    }             
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log(data)      
+    if(data.lease_types){
+      allLeasesTypes = data.lease_types.map((leaseType) =>
+      {
+        return leaseType;
+      });
+    }
+    console.log(allLeasesTypes)
+    this.setState({
+      leaseTypes: allLeasesTypes,
+  });
+  })
+}
+
+
+adminGetAllProperties = () => {        
+  let token = localStorage.getItem('token');   
+  let allProperties_temp = []; 
+  fetch(`${this.URL}admin_get_all_properties`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`, 
+    }             
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log(data)      
+    if(data.properties){
+      allProperties_temp = data.properties.map((property) =>
+      {
+        return property;
+      });
+    }
+    console.log(allProperties_temp)
+    this.setState({
+      properties: allProperties_temp,
+  });
+  })
+}
+
+
+
+returnToLeases() {
   
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+  this.props.history.push("/admin_leases");
+}
+
+handleAdminCreateLease = (event) => {
+  //make a request to the 
   
+  event.preventDefault();  
+  let token = localStorage.getItem('token');   
+  fetch(`${this.URL}admin_create_lease`, {
+    method: 'POST',
+    headers: {        
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: `Bearer ${token}`, 
+    },
+    body: JSON.stringify({
+      leaseToCreate: {
+        property_id: this.state.selectedPropertyAddress,
+        user_id: this.state.selectedUser,
+        lease_type_id: this.state.selectedLeaseType,
+        monthly_rent_price: this.state.monthlyRent,
+        start_date: this.state.start_date.toString(),
+        end_date: this.state.end_date.toString(),
+        first_month_rent: this.state.firstMonthRent,
+        last_month_rent: this.state.lastMonthRent,
+        security_deposit: this.state.securityDeposit,
+        balance: this.state.total
+      }
+    })
+  })
+  .then(r => r.json())
+  .then(data => {
+    console.log(data)
+    
+    if(data.status != 200)    
+    {
+      let failMessage = `${data.info}. Please try again.`
+      this.setState({info: failMessage})
+    }
+  })
+}
+
+  componentDidMount() {
+    //debugger
+    this.adminGetAllUsers();
+    this.adminGetAllProperties();
+    this.adminGetAllLeaseTypes();
+  }
+
+  render() {
     return (
-      <>
-        <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
-        </Button>
-  
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
+      <Fragment>                            
+         <div className="col-md-6 login-form-1">
+        <h3>New Lease</h3>
+        <label>Select Account *</label>
+        <form onSubmit={this.handleAdminCreateLease}>
+          <div className="form-group">
+          <select value={this.state.selected_user} 
+          onChange={this.handleUserSelection}>{this.populateUsers()}</select> <button onClick={this.handleNewLease} disabled="true">New User</button>
+          <br></br>
+          <label>Select Property *</label>
+          <br></br>
+          <select value={this.state.selectedPropertyAddress}
+            onChange={this.handlePropertyAddressSelection}>
+              {this.populateProperties()}</select>
+          
+          <br></br>
+          <label>Lease Type *</label>
+          <br></br>
+          <select value={this.state.selectedLeaseType}
+            onChange={this.handleLeaseTypeSelection}>
+          {this.populateLeaseTypes()}</select>
+          <br></br>
+          <br></br>
+
+          <label>Monthly Rental Rate *</label>
+            <br></br>
+            <CurrencyInput name="monthlyRent" prefix="$" value={this.state.monthlyRent} onChangeEvent={this.handleCurrencyChange}/>
+            <br></br>
+            
+
+          <br></br>
+          <label>Lease Start Date *</label>
+          <br></br>
+          <DatePicker name="start_date"
+              selected={this.state.start_date}
+              onChange={this.handleStartDateChange}              
+            />
+
+          <br></br>
+          <label>Lease End Date *</label>
+          <br></br>
+          <DatePicker name="end_date"
+              selected={this.state.end_date}
+              onChange={this.handleEndDateChange}              
+            />
+            {/* <label>First Name *</label>
+            <input
+              name="firstName"
+              type="text"
+              className="form-control"
+              placeholder=""
+              value={this.state.firstName}
+              onChange={this.handleChange}
+            />          
+          <label>Last Name *</label>
+            <input
+              name="lastName"
+              type="text"
+              className="form-control"
+              placeholder=""
+              value={this.state.lastName}
+              onChange={this.handleChange}
+            />          
+          <label>Email *</label>
+            <input
+              name="email"
+              type="text"
+              className="form-control"
+              placeholder=""
+              value={this.state.email}
+              onChange={this.handleChange}
+            />                  */}
+          {/* <label>Phone Number *</label>
+            <input
+              name="phone"
+              type="text"
+              className="form-control"
+              placeholder=""
+              value={this.state.phone}
+              onChange={this.handleChange}
+            />           */}
+            <br></br>
+            <br></br>
+            <label>First Month Rent *</label>
+            <br></br>
+            <CurrencyInput name="firstMonthRent" prefix="$" value={this.state.firstMonthRent} onChangeEvent={this.handleCurrencyChange}/>
+            <br></br>
+            <br></br>
+            {/* <input
+              name="firstMonthRent"
+              type="text"
+              className="form-control"
+              placeholder=""
+              value={this.state.firstMonthRent}
+              onChange={this.handleChange}
+            /> */}
+            <label>Security Deposit *</label>
+            <br></br>
+            <CurrencyInput name="securityDeposit" prefix="$" value={this.state.securityDeposit} onChangeEvent={this.handleCurrencyChange}/>
+            <br></br>
+            <br></br>
+            {/* <input
+              name="securityDeposit"
+              type="text"
+              className="form-control"
+              placeholder=""
+              value={this.state.securityDeposit}
+              onChange={this.handleChange}
+            /> */}
+            <label>Last Months Rent *</label>
+            <br></br>
+            <CurrencyInput name="lastMonthRent" prefix="$" value={this.state.lastMonthRent} onChangeEvent={this.handleCurrencyChange}/>
+            <br></br>
+            <br></br>
+            {/* <input
+              name="lastMonthRent"
+              type="text"
+              className="form-control"
+              placeholder=""
+              value={this.state.lastMonthRent}
+              onChange={this.handleChange}
+            /> */}
+            {/* <label>Total: $<CurrencyInput name="total" value={this.state.total} onChangeEvent={this.handleCurrencyChange}/></label> */}
+          <label>Total: ${this.state.total.toFixed(2)}</label>
+            
+            
+
+
+
+          <br></br>
+          <br></br>
+          <br></br>
+
+          <label>SSN *</label>
+            <input 
+              name="ssn"
+              type="text"
+              className="form-control"
+              placeholder=""
+              value={this.state.ssn}
+              onChange={this.handleChange}
+              disabled="true"
+            />
+          <label>Credit Card Number *</label>
+            <input
+              name="ccn"
+              type="text"
+              className="form-control"
+              placeholder=""
+              value={this.state.ccn}
+              onChange={this.handleChange}
+              disabled="true"
+            />
+            
+            <br></br>
+            <label>Expiration Date *</label>
+            <br></br>
+            
+            <DatePicker name="exp_date"
+              selected={this.state.exp_date}
+              onChange={this.handleDateChange}
+              disabled="true"
+            />
+            <br></br>
+            <br></br>
+            <label>CCV *</label>
+            <input
+              name="ccv"
+              type="text"
+              className="form-control"
+              placeholder=""
+              value={this.state.ccv}
+              onChange={this.handleChange}
+              disabled="true"
+            />
+            </div>
+          <br></br>
+          <div className="form-group">
+            <input type="submit" className="btnSubmit" value="Create Lease" />
+          </div>
+          <label style={{ color: 'red' }}>{this.state.info}</label>
+        </form>
+        <button onClick={this.returnToLeases} disabled="true">Cancel</button>
+        
+        </div>
+      </Fragment>
     );
   }
-  
-  render(<Example />);
+}
+
+export default withRouter(AdminNewLease);
+

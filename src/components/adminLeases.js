@@ -122,19 +122,28 @@ class AdminLeases extends React.Component {
       })
     }
 
+    handleNewLease = () => {           
+      this.props.history.push("/admin_new_lease");
+    }
+
 
   render() {
     return (
       <Fragment>          
         <div className="lease_container" display="flex">
-          <h3>Admin Leases</h3>                      
+          <h3>Admin Leases</h3>             
+            <br></br>         
+             <button onClick={this.handleNewLease}>New Lease</button>
+            
+            <br></br>
+            <br></br>
             <label>Active/Terminated</label>
             <br></br>
           <input
             name="active"
             type="checkbox"
             checked={this.state.active}
-            onChange={this.handleInputChange} />
+            onChange={this.handleInputChange} />         
 
           <table id='filteredLeases'>
              <tbody>
