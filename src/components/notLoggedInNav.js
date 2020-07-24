@@ -7,7 +7,7 @@ class NotLoggedInNav extends PureComponent {
   renderLogin = () => {
     //const { history } = this.props;
       // this.props.history.push("/signin");
-
+      //this.props.history.push("/logged_out");
   }
 
   render() {

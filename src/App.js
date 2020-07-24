@@ -15,35 +15,47 @@ import RenterPaymentHistory from './components/renterPaymentHistory'
 import AdminPaymentHistory from './components/adminPaymentHistory'
 import AdminNewLease from './components/adminNewLease'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {updateUser} from './actions/ampActions'
+import { connect } from 'react-redux';
 
-export default class App extends Component {
+class App extends Component {
   state = {
     nav_panel: "",
     content_panel: "",
     admin: false,
-    user: {},
+    //user: {},
     token: {}
   };
 
   signOutHandler = (e) => {
     console.log("signOut reached");
-    this.storeUser({});
+    this.storeUser(null);
     localStorage.clear();
     
   };
 
   storeUser = (userToStore, token) => {    
-    this.setState({user: userToStore})
+    
+    this.props.updateUser(userToStore);
+    //this.setState({user: userToStore})
     //debugger
   }
+
+  userInStore = (e) =>{    
+    console.log("App userInStore called")
+    if (!this.props.user) {return false}
+    let value =  Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object
+    return !value
+  }
+
 
   render() {
     return (
       <Router>
         <div className="flex-container-row">
           <div className="link-panel">
-            <ConditionalNavBar user={this.state.user} signOutHandler={this.signOutHandler}
-            />
+            {/* <ConditionalNavBar user={this.state.user} signOutHandler={this.signOutHandler}/> */}
+            <ConditionalNavBar signOutHandler={this.signOutHandler} onUserInStore={this.userInStore}/>
           </div>
           <Switch>
             {/* <Route exact path="/sign_out" render={(props) => <SignOut {...props} /> } /> */}
@@ -70,3 +82,17 @@ export default class App extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {user: state.user}
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateUser: (user) => dispatch(updateUser(user))
+          
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

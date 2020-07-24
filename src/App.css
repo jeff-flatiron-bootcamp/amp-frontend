@@ -54,3 +54,50 @@
   display: flex;  
   background-color: darkgrey;
 }
+
+
+.auth-box {
+  position: absolute;
+  width: 671px;
+  height: 735px;
+  left: 344px;
+  top: 111px;
+  
+  background: #FFFFFF;
+  border: 2px solid #000000;
+  box-sizing: border-box;
+    &:after {
+      content:'';
+      position:absolute;
+      top:50px;
+      left:50px;
+      width:100px;
+      height:100px;
+      background-color:#fff;
+      z-index:2;
+    }
+  }
+  
+  
+  // Not needed for the box, just to center it vertically and horizontally
+  .center-center {
+    margin:0 auto;
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-top:-100px;
+    margin-left:-100px;
+  }
+
+
+  .auth-input {
+    position: absolute;
+    left: 31.11%;
+    right: 36.6%;
+    top: 29.49%;
+    bottom: 64.84%;
+
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    box-sizing: border-box;
+  }

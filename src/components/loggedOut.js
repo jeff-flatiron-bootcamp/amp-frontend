@@ -1,6 +1,6 @@
-import React, { Fragment } from "react";
+import React, { Fragment, PureComponent } from "react";
 
-class LoggedOut extends React.Component {
+class LoggedOut extends PureComponent {
 
   render() {
     return (

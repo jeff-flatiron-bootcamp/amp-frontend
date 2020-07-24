@@ -2,6 +2,7 @@ import React, { Fragment, PureComponent } from "react";
 import NotLoggedInNav from "./notLoggedInNav";
 import AdminNav from "./adminNav";
 import RenterNav from "./renterNav";
+import { connect } from 'react-redux';
 
 class ConditionalNavBar extends PureComponent {
   renderNotLoggedInNav = () => {
@@ -13,6 +14,7 @@ class ConditionalNavBar extends PureComponent {
     // console.log(result);
     // console.log("End token check")
      
+    debugger
      
     return (
       <Fragment>
@@ -22,11 +24,11 @@ class ConditionalNavBar extends PureComponent {
   };
 
   renderLoggedInNav = () => {
-    
+    //orignal code    
     let localStorageUser = JSON.parse(localStorage.getItem('user'))
-    
-    //if (this.props.user.admin) {
-    if(localStorageUser.admin){
+    debugger
+    if (this.props.user.admin) {
+    //if(localStorageUser.admin){
       return (
         <Fragment>
           <AdminNav onSignOut={this.props.signOutHandler} />
@@ -57,10 +59,19 @@ class ConditionalNavBar extends PureComponent {
     return (
       <>
        {/* {this.props.user.id ? this.renderLoggedInNav() : this.renderNotLoggedInNav()} */}
-       {this.tokenInStorage() ? this.renderLoggedInNav() : this.renderNotLoggedInNav()}
+       {/* {this.props.user ? this.renderLoggedInNav() : this.renderNotLoggedInNav()} */}
+       {this.props.onUserInStore() ? this.renderLoggedInNav() : this.renderNotLoggedInNav() }
+       
+
+       {/*original code below this */}
+       {/* {this.tokenInStorage() ? this.renderLoggedInNav() : this.renderNotLoggedInNav()} */}
       </>
     );
   }
 }
 
-export default ConditionalNavBar;
+const mapStateToProps = state => {
+  return {user: state.user}
+}
+
+export default connect(mapStateToProps) (ConditionalNavBar);

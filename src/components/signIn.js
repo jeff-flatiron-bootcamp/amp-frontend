@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+//import connect from "react-redux/lib/connect/connect";
+//import mapStateToProps from "react-redux/lib/connect/mapStateToProps";
+import {updateUser} from '../actions/ampActions'
+import { connect } from 'react-redux';
 
 class SignIn extends Component {
   state = {
@@ -27,13 +31,19 @@ class SignIn extends Component {
       .then((json) => {
         console.log(json);
         
-        if (json.status == 200) {
-        
+        if (json.status == 200) {          
           localStorage.setItem("token", json.jwt);
           // this.storeToken(json)      
-          localStorage.setItem("user", JSON.stringify(json.user));
+                            
+          localStorage.setItem("user", JSON.stringify(json.user));                          
           this.setState({info: ""})
           this.props.onStoreUser(json.user)
+
+          //debugger
+          //REDUX SECTION
+          this.props.updateUser(json.user);
+          //REDUX SECTION
+          
           if (json.user.admin) {
             this.props.history.push("/profile");
           } else {
@@ -95,4 +105,22 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+const mapStateToProps = state => {
+  return {user: state.user}
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateUser: (user) => dispatch(updateUser(user))
+          
+  }
+}
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     addRestaurant: (restaurant) => dispatch(addRestaurant(restaurant))
+//   }
+// }
+
+//export default SignIn;
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn)
