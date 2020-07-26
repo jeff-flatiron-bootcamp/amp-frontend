@@ -85,3 +85,5 @@ class AdminNav extends PureComponent {
 }
 
 export default withRouter(AdminNav);
+//export default withState(withLabel(withTheme(MyComponent)))
+//export default connect(mapStateToProps) (ConditionalNavBar);
