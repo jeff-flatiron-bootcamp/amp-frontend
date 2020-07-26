@@ -14,7 +14,7 @@ class ConditionalNavBar extends PureComponent {
     // console.log(result);
     // console.log("End token check")
      
-    debugger
+    //debugger
      
     return (
       <Fragment>
@@ -26,7 +26,7 @@ class ConditionalNavBar extends PureComponent {
   renderLoggedInNav = () => {
     //orignal code    
     let localStorageUser = JSON.parse(localStorage.getItem('user'))
-    debugger
+    //debugger
     if (this.props.user.admin) {
     //if(localStorageUser.admin){
       return (

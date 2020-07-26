@@ -77,7 +77,7 @@ class AdminPaymentHistory extends React.Component {
   }
 
   handleUserSelection = (e) => {
-    this.setState({selectedUser:e.target.value}, this.adminGetPaymentHistoryForUser());    
+    this.setState({selectedUser:e.target.value}, this.adminGetPaymentHistoryForUser);    
   }
 
   renderTableHeader() {            

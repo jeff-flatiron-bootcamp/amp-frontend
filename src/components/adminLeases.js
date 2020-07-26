@@ -35,6 +35,7 @@ class AdminLeases extends React.Component {
 
   filterTables(currValue)
   {
+    debugger
     if(currValue == true)
     {
       let filteredLeasesTemp = this.state.leases.filter(lease => lease.status == true)

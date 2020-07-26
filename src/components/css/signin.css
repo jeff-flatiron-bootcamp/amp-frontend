@@ -1,0 +1,17 @@
+.signin-box {
+    width: 671px;
+    height: 735px;
+    display: flex;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    box-sizing: border-box;
+    align-items: center;
+    align-items: center;
+    justify-content: center;    
+}
+
+.signin-page { 
+    background-color: darkslateblue;
+    width: 100vh;
+    height: 100vh;
+}

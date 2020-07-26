@@ -41,7 +41,7 @@ class RenterNav extends PureComponent {
           </NavLink>
         </h5>
         <h5>
-          <NavLink style={{ color: "red" }} to="/renter_payment_history">
+          <NavLink style={{ color: "red" }} to="/renter_post_payment">
             Payments
           </NavLink>
         </h5>

@@ -12,6 +12,7 @@ import LoggedOut from './components/loggedOut'
 import AdminLease from './components/adminLeases'
 import RenterLease from './components/renterLease'
 import RenterPaymentHistory from './components/renterPaymentHistory'
+import RenterPostPayment from './components/renterPostPayment'
 import AdminPaymentHistory from './components/adminPaymentHistory'
 import AdminNewLease from './components/adminNewLease'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -63,7 +64,7 @@ class App extends Component {
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/renter_lease" component={RenterLease} />
             <Route exact path="/admin_leases" component={AdminLease} />
-            <Route exact path="/renter_payment_history" component={RenterPaymentHistory} />
+            <Route exact path="/renter_post_payment" component={RenterPostPayment} />
             <Route exact path="/admin_payment_history" component={AdminPaymentHistory} />
             <Route exact path="/logged_out" component={LoggedOut} />
             <Route exact path="/admin_new_lease" render={(props) => <AdminNewLease {...props} /> }/>
