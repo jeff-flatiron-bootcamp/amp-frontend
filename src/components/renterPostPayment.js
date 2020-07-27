@@ -104,9 +104,6 @@ class RenterPostPayment extends React.Component {
         if (data.status == 200) {
           this.parseLeaseInformation(data);
         }
-        //let infoPanel = `Request {profile-detail} = firstname{${data.user.firstname}} lastname{${data.user.lastname}} phone{${data.user_contact[0].phone}} email {${data.user_contact[0].email}} `
-        //  let infoPanel = `Request{renter_get_lease} = primary_lease{${JSON.stringify(data.primary_lease)}}`
-        //  this.setState({textAreaValue: `${infoPanel}`});
       });
   };
 
@@ -146,8 +143,7 @@ class RenterPostPayment extends React.Component {
 
   handlePayment = (e) => {
     e.preventDefault();
-    this.renterPostPayment();
-    //this.getLeaseInfo();
+    this.renterPostPayment();    
   };
 
   handleDateChange = (date) => {
