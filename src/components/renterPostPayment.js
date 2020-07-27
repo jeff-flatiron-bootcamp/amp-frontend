@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import DatePicker from "react-datepicker";
 import './css/tables.css'
 import "react-datepicker/dist/react-datepicker.css";
+import CurrencyInput from 'react-currency-input';
 
 class RenterPostPayment extends React.Component {
   constructor() {
@@ -13,8 +14,10 @@ class RenterPostPayment extends React.Component {
       expirationDate: new Date(),
       ccv: "",
       balance: 0.0,
+      lease_id: -1,
       payments: [],
-      sortedPayments: []
+      sortedPayments: [],
+      amountToPay: 0.00
     };
   }
 
@@ -111,13 +114,40 @@ class RenterPostPayment extends React.Component {
     if (json.primary_lease) {
       this.setState({
         balance: json.primary_lease.balance,
+        leaseId: json.primary_lease.id,
       });
     }
   };
 
+  renterPostPayment = () => {          
+    let token = localStorage.getItem('token');   
+    fetch(`${this.URL}renter_create_payment`, {
+      method: 'POST',
+      headers: {        
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`, 
+      },
+      body: JSON.stringify({
+        payment: {
+          lease_id: this.state.leaseId,    
+          amount: this.state.amountToPay,    
+        }
+      })
+    })
+    .then(r => r.json())
+    .then(data => {
+      console.log(data)
+      if (data.status == 201) {
+        this.getRenterPaymentHistory();
+      }
+    })
+  }
+
   handlePayment = (e) => {
     e.preventDefault();
-    this.getLeaseInfo();
+    this.renterPostPayment();
+    //this.getLeaseInfo();
   };
 
   handleDateChange = (date) => {
@@ -132,6 +162,10 @@ class RenterPostPayment extends React.Component {
     });
   };
 
+  handleCurrencyChange = (event, maskedvalue, floatvalue) => {    
+    this.setState({[event.target.name]: floatvalue});    
+  }
+
   componentDidMount() {
     this.getLeaseInfo();
     this.getRenterPaymentHistory();
@@ -145,6 +179,12 @@ class RenterPostPayment extends React.Component {
           <h3>Balance on lease: ${this.state.balance}</h3>
           <form onSubmit={this.handlePayment}>
             <div className="form-group">
+            <br></br>
+            <label>Amount to Pay *</label>
+            <br></br>
+            <CurrencyInput name="amountToPay" prefix="$" value={this.state.amountToPay} onChangeEvent={this.handleCurrencyChange}/>
+            <br></br>
+
               <label>Full Name *</label>
               <input
                 name="fullNameOnCC"
@@ -181,7 +221,7 @@ class RenterPostPayment extends React.Component {
               />
             </div>
             <div className="form-group">
-              <input type="submit" className="btnSubmit" value="Save" />
+              <input type="submit" className="btnSubmit" value="Make Payment" />
               <input type="submit" name="submitted" value="Cancel" />
             </div>
           </form>
