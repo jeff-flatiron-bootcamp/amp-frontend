@@ -39,8 +39,8 @@
 
 .link-panel {
   height: 100vh;
-  width: 35vh;
-  background-color: #282c34;
+  width: 35vh;  
+  background: #48A999;
   color: aliceblue;
 }
 
@@ -51,35 +51,10 @@
 }
 
 .flex-container-row {
-  display: flex;  
-  background-color: darkgrey;
+  display: flex;    
+  background: #FFFFFF;
 }
 
-
-.auth-box {
-  position: absolute;
-  width: 671px;
-  height: 735px;
-  left: 344px;
-  top: 111px;
-  
-  background: #FFFFFF;
-  border: 2px solid #000000;
-  box-sizing: border-box;
-    &:after {
-      content:'';
-      position:absolute;
-      top:50px;
-      left:50px;
-      width:100px;
-      height:100px;
-      background-color:#fff;
-      z-index:2;
-    }
-  }
-  
-  
-  // Not needed for the box, just to center it vertically and horizontally
   .center-center {
     margin:0 auto;
     position:absolute;
@@ -100,4 +75,15 @@
     background: #FFFFFF;
     border: 2px solid #000000;
     box-sizing: border-box;
+  }
+
+  .form-control:focus {
+    border-color: #48A999;
+    background: white;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
+  }
+
+  .contentTitle {    
+      margin-left: 30px;
+      margin-top: 50px;    
   }

@@ -20,7 +20,7 @@ class RenterNav extends PureComponent {
   render() {
 
     const labelStyles = {
-      color: 'red',
+      color: 'white',
       underline: {textDecorationLine: 'underline'}
     }
 
@@ -31,27 +31,27 @@ class RenterNav extends PureComponent {
           AMP!                             
         </h3>               
         <h5>
-          <NavLink style={{ color: "red" }} to="/profile">
+            <NavLink activeStyle={{color: "black"}} style={{ color: "white" }} to="/profile">
             My Profile
           </NavLink>
         </h5>
         <h5>
-          <NavLink style={{ color: "red" }} to="/renter_lease">
+          <NavLink activeStyle={{color: "black"}} style={{ color: "white" }} to="/renter_lease">          
             Lease
           </NavLink>
         </h5>
         <h5>
-          <NavLink style={{ color: "red" }} to="/renter_post_payment">
+          <NavLink activeStyle={{color: "black"}} style={{ color: "white" }} to="/renter_post_payment">          
             Payments
           </NavLink>
         </h5>
         <h5>
-          <NavLink style={{ color: "red" }} to="/renter_service_requests">
+          <NavLink activeStyle={{color: "black"}} style={{ color: "white" }} to="/renter_service_requests">          
             Service Requests
           </NavLink>
         </h5>
         <h5>
-          <NavLink style={{ color: "red" }} to="/community_docs">
+          <NavLink activeStyle={{color: "black"}} style={{ color: "white" }} to="/community_docs">          
             Community Docs
           </NavLink>
         </h5>

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 //import mapStateToProps from "react-redux/lib/connect/mapStateToProps";
 import {updateUser} from '../actions/ampActions'
 import { connect } from 'react-redux';
+import './css/signin.css'
 
 class SignIn extends Component {
   state = {
@@ -65,20 +66,19 @@ class SignIn extends Component {
     });
   };
 
-  componentDidMount() {
-    //debugger
+  componentDidMount() {    
   }
 
   render() {
     return (
       <div className="col-md-6 login-form-1">
-        <h3>AMP-Login</h3>
+        <h3 className="signin-text" >AMP-Sign In</h3>
         <form onSubmit={this.handleLogin}>
           <div className="form-group">
             <input
               name="nameLogin"
               type="text"
-              className="form-control"
+              className="form-control username"
               placeholder="User Name"
               value={this.state.nameLogin}
               onChange={this.handleChange}
@@ -88,7 +88,7 @@ class SignIn extends Component {
             <input
               name="passwordLogin"
               type="password"
-              className="form-control"
+              className="form-control password"
               placeholder="Your Password *"
               value={this.state.passwordLogin}
               onChange={this.handleChange}

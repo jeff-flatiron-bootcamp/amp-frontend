@@ -17,6 +17,9 @@ import AdminPaymentHistory from './components/adminPaymentHistory'
 import AdminNewLease from './components/adminNewLease'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {updateUser} from './actions/ampActions'
+import User from './components/user'
+import Lease from './components/lease'
+import PropertyAddress from './components/propertyAddress'
 import { connect } from 'react-redux';
 
 class App extends Component {
@@ -53,7 +56,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="flex-container-row">
+        <div className="flex-container-row app-main-row">
           <div className="link-panel">
             {/* <ConditionalNavBar user={this.state.user} signOutHandler={this.signOutHandler}/> */}
             <ConditionalNavBar signOutHandler={this.signOutHandler} onUserInStore={this.userInStore}/>
@@ -67,6 +70,9 @@ class App extends Component {
             <Route exact path="/renter_post_payment" component={RenterPostPayment} />
             <Route exact path="/admin_payment_history" component={AdminPaymentHistory} />
             <Route exact path="/logged_out" component={LoggedOut} />
+            <Route exact path="/user/:id" component={User} />
+            <Route exact path="/Lease/:id" component={Lease} />
+            <Route exact path="/property_address/:id" component={PropertyAddress} />
             <Route exact path="/admin_new_lease" render={(props) => <AdminNewLease {...props} /> }/>
             {/* <Route exact path="/"> <Redirect to="/login" /></Route> */}
             {/* <Route path="/login" component={Login} /> */}

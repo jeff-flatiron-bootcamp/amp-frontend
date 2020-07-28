@@ -1,6 +1,8 @@
 import React, { PureComponent, Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import { withRouter } from 'react-router-dom';
+import './css/notLoggedInNav.css'
+
 
 class NotLoggedInNav extends PureComponent {
 
@@ -10,7 +12,7 @@ class NotLoggedInNav extends PureComponent {
       //this.props.history.push("/logged_out");
   }
 
-  render() {
+  render() {    
     return (   
       <Fragment> 
       <nav className="navbar flex-column">
@@ -18,12 +20,12 @@ class NotLoggedInNav extends PureComponent {
           AMP!                             
         </h3>               
         <h4>
-          <NavLink style={{ color: "red" }} to="/signin">
+          <NavLink activeStyle={{color: "black"}} style={{ color: "white" }} to="/signin">
             SignIn
           </NavLink>
         </h4>
         <h4>
-          <NavLink style={{ color: "red" }} to="/create_account">
+          <NavLink activeStyle={{color: "black"}} style={{ color: "white" }} to="/create_account">
             Create Account
           </NavLink>
         </h4>

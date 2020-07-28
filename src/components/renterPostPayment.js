@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import './css/tables.css'
 import "react-datepicker/dist/react-datepicker.css";
 import CurrencyInput from 'react-currency-input';
+import './css/renterPostPayment.css'
 
 class RenterPostPayment extends React.Component {
   constructor() {
@@ -32,14 +33,12 @@ class RenterPostPayment extends React.Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        //console.log(data.info)
+        console.log(data);        
         if (data.payment_history) {
             allPayments = data.payment_history.map((lease) => {
             return lease;
           });
-        }
-        //debugger
+        }        
         console.log(allPayments);
         this.setState({
           payments: allPayments,
@@ -178,7 +177,7 @@ class RenterPostPayment extends React.Component {
             <br></br>
             <label>Amount to Pay *</label>
             <br></br>
-            <CurrencyInput name="amountToPay" prefix="$" value={this.state.amountToPay} onChangeEvent={this.handleCurrencyChange}/>
+            <CurrencyInput className="Currency" name="amountToPay" prefix="$" value={this.state.amountToPay} onChangeEvent={this.handleCurrencyChange}/>
             <br></br>
 
               <label>Full Name *</label>
@@ -218,7 +217,7 @@ class RenterPostPayment extends React.Component {
             </div>
             <div className="form-group">
               <input type="submit" className="btnSubmit" value="Make Payment" />
-              <input type="submit" name="submitted" value="Cancel" />
+              {/* <input type="submit" name="submitted" value="Cancel" /> */}
             </div>
           </form>
 

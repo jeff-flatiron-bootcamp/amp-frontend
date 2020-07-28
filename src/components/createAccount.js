@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import './css/createAccount.css'
 
 export default class CreateAccount extends Component {
     constructor(){
@@ -53,14 +54,14 @@ export default class CreateAccount extends Component {
 
   render() {
     return (
-      <div className="col-md-6 login-form-2">
-        <h3>AMP-Create Account</h3>
+      <div className="col-md-6 login-form-1">
+        <h3 className="createAccount-text" >AMP-Create Account</h3>
         <form onSubmit={this.handleCreateUser}>
           <div className="form-group">
             <input
               name="nameSignup"
               type="text"
-              className="form-control"
+              className="form-control username"
               placeholder="User Name"
               value={this.state.nameSignup}
               onChange={this.handleChange}
@@ -71,7 +72,7 @@ export default class CreateAccount extends Component {
             <input
               name="passwordSignup"
               type="password"
-              className="form-control"
+              className="form-control password"
               placeholder="Your Password *"
               value={this.state.passwordSignup}
               onChange={this.handleChange}

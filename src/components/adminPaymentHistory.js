@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import './adminPaymentHistory.css';
+import './css/adminPaymentHistory.css';
 
 class AdminPaymentHistory extends React.Component {
 
@@ -9,6 +9,7 @@ class AdminPaymentHistory extends React.Component {
     this.state = {
       active: true,      
       payments: [],
+      sortedPayments: [],
       selectedUser: {},
       users: []
     };    
@@ -61,16 +62,32 @@ class AdminPaymentHistory extends React.Component {
         {
           return payment;
         });
-      }       
-       this.setState({
-        payments: allPayments
-       })          
-       //let infoPanel = `Request {profile-detail} = firstname{${data.user.firstname}} lastname{${data.user.lastname}} phone{${data.user_contact[0].phone}} email {${data.user_contact[0].email}} `
-      //  let infoPanel = `Request{renter_get_payment_history} = payment_history{${JSON.stringify(data.payment_history)}}`
-      //  this.setState({textAreaValue: `${infoPanel}`});
+      }             
+      this.setState({
+        payments: allPayments,
+      }, this.sortRows(this.state.payments, true));
       
     })
   }
+
+  sortRows(data, direction) {        
+    let sortedPaymentsTemp = data.sort((curr, nextIter) => {
+        var a = Date.parse(curr.created_at);
+        var b = Date.parse(nextIter.created_at);     
+        if(direction) //decending
+        {
+          return a < b ? 1 : -1
+        }
+        else          //ascending
+        {
+          return a < b ? -1 : 1
+        }
+        })
+
+    this.setState({
+        sortedPayments: sortedPaymentsTemp,
+    });
+}
 
   populateUsers = () => {
     return this.state.users.map((user) => <option key={user.id} value={user.id}>{`${user.id}-${user.username}-${user.firstname} ${user.lastname}`}</option>)
@@ -81,9 +98,9 @@ class AdminPaymentHistory extends React.Component {
   }
 
   renderTableHeader() {            
-    if(this.state.payments.length > 0)
+    if(this.state.sortedPayments.length > 0)
     {       
-       let header = Object.keys(this.state.payments[0])
+       let header = Object.keys(this.state.sortedPayments[0])
        return header.map((key, index) => {
           return <th key={index}>{key.toUpperCase()}</th>
        })
@@ -92,7 +109,7 @@ class AdminPaymentHistory extends React.Component {
 
 
   renderTableData() {                  
-      return this.state.payments.map((payment, index) => {       
+      return this.state.sortedPayments.map((payment, index) => {       
 
        const {id,	lease_id,	amount, created_at, updated_at } = payment
        return (
@@ -125,8 +142,8 @@ class AdminPaymentHistory extends React.Component {
     return (
       <Fragment>  
         <div className="lease_container" display="flex" flex-direction="column">
-          <h3>Payment History</h3>                              
-          <select value={this.state.selected_user} onChange={this.handleUserSelection}>{this.populateUsers()}</select>    
+          <h3 className="contentTitle" >Payment History</h3>                              
+          <select className="userSelect" value={this.state.selected_user} onChange={this.handleUserSelection}>{this.populateUsers()}</select>    
           <br></br>     
           <br></br>   
           

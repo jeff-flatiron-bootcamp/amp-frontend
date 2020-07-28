@@ -28,7 +28,7 @@ class AdminNav extends PureComponent {
   render() {
 
     const labelStyles = {
-      color: 'red',
+      color: 'white',
       underline: {textDecorationLine: 'underline'}
     }
 
@@ -40,27 +40,27 @@ class AdminNav extends PureComponent {
           AMP! <label>ADMIN</label>                             
         </h3>               
         <h5>
-          <NavLink style={{ color: "red" }} to="/profile">
+          <NavLink activeStyle={{color: "black"}} style={{ color: "white" }} to="/profile">
             My Profile
           </NavLink>
         </h5>
         <h5>
-          <NavLink style={{ color: "red" }} to="/admin_leases">
+          <NavLink activeStyle={{color: "black"}} style={{ color: "white" }} to="/admin_leases">
             Leases
           </NavLink>
         </h5>
         <h5>
-          <NavLink style={{ color: "red" }} to="/admin_payment_history">
+          <NavLink activeStyle={{color: "black"}} style={{ color: "white" }} to="/admin_payment_history">
             Payment History
           </NavLink>
         </h5>
         <h5>
-          <NavLink style={{ color: "red" }} to="/admin_servce_requests">
+          <NavLink activeStyle={{color: "black"}} style={{ color: "white" }} to="/admin_servce_requests">
             Service Requests
           </NavLink>
         </h5>
         <h5>
-          <NavLink style={{ color: "red" }} to="/admin_documents">
+          <NavLink activeStyle={{color: "black"}} style={{ color: "white" }} to="/admin_documents">
             Documents
           </NavLink>
         </h5>

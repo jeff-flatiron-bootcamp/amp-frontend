@@ -1,5 +1,7 @@
 import React, { Fragment } from "react";
-import './adminLeases.css';
+import './css/adminLeases.css';
+
+import { Link } from 'react-router-dom';
 
 class AdminLeases extends React.Component {
   constructor(props) {
@@ -76,13 +78,13 @@ class AdminLeases extends React.Component {
          created_at, updated_at, start_date, end_date, first_month_rent, last_month_rent, security_deposit } = lease
        return (
            <tr key={id}>
-              <td>{id}</td>
-              <td>{user_id}</td>
+              <td><Link to={`/lease/${id}`} >{id}</Link></td>
+              <td><Link to={`/user/${user_id}`} >{user_id}</Link></td>              
               <td>{lease_type_id}</td>
               <td>{status.toString()}</td>
               <td>{monthly_rent_price}</td>
               <td>{balance}</td>
-              <td>{property_address_id}</td>
+              <td><Link to={`/property_address/${property_address_id}`} >{property_address_id}</Link></td>                 
               <td>{created_at}</td>
               <td>{updated_at}</td>
               <td>{start_date}</td>
@@ -95,7 +97,7 @@ class AdminLeases extends React.Component {
     })
     }
 
-    componentDidMount(){
+    getAllLeases = () => {
       let token = localStorage.getItem('token');   
       let allLeases = []; 
       fetch(`${this.URL}admin_get_all_leases`, {
@@ -123,6 +125,10 @@ class AdminLeases extends React.Component {
       })
     }
 
+    componentDidMount(){
+      this.getAllLeases()
+    }
+
     handleNewLease = () => {           
       this.props.history.push("/admin_new_lease");
     }
@@ -132,20 +138,14 @@ class AdminLeases extends React.Component {
     return (
       <Fragment>          
         <div className="lease_container" display="flex">
-          <h3>Admin Leases</h3>             
-            <br></br>         
-             <button onClick={this.handleNewLease}>New Lease</button>
-            
-            <br></br>
-            <br></br>
-            <label>Active/Terminated</label>
-            <br></br>
+          <h3 className="tableHeader" >Admin Leases</h3>                           
+            <label className="activeCB" >Active/Terminated   </label>            
           <input
             name="active"
             type="checkbox"
             checked={this.state.active}
             onChange={this.handleInputChange} />         
-
+        <button className="newLeaseButton" onClick={this.handleNewLease}>New Lease</button>
           <table id='filteredLeases'>
              <tbody>
                 <tr>{this.renderTableHeader()}</tr>
