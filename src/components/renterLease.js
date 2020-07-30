@@ -1,9 +1,11 @@
 import React, { Fragment } from "react";
+import './css/renterLease.css'
 
 class RenterLease extends React.Component {
   constructor() {
     super();
-    this.URL = "http://localhost:3000/api/v1/";
+    //this.URL = "http://localhost:3000/api/v1/";
+    this.URL = "http://10.0.0.207:3000/api/v1/";
     this.state = {
       info: "",
       firstNameOnLease: "",
@@ -63,16 +65,26 @@ class RenterLease extends React.Component {
     return (
       <Fragment>
         <div className="lease_container" display="flex">
-          <h3>Renter Lease</h3>
-          <br></br>                    
-            <h4>Name on Lease: <label>{`${this.state.firstNameOnLease} ${this.state.lastNameOnLease}`}</label></h4>            
-            <h4>Unit Number: <label>{`${this.state.apartment}`}</label></h4>
-            <h4>Date Signed: <label>{`${this.state.start_date}`}</label></h4>
-            <h4>Lease Ends: <label>{`${this.state.end_date}`}</label> </h4>
-            <h4>First Month's Rent: <label>{`${this.state.firstMonthsRent}`}</label></h4>
-            <h4>Last Month's Rent: <label>{`${this.state.lastMonthsRent}`}</label></h4>
-            <h4>Security Deposit: <label>{`${this.state.securityDeposit}`}</label> </h4>           
-            <h4>Balance: <label>{`${this.state.balance}`}</label></h4>          
+          <h3 className="content-title">Renter Lease</h3>
+          
+          <div className="profile-body">
+            <label>Name on Lease: {`${this.state.firstNameOnLease} ${this.state.lastNameOnLease}`}</label>
+            <br></br>
+            <label>Unit Number: {`${this.state.apartment}`}</label>
+            <br></br>
+            <label>Date Signed: {`${this.state.start_date}`}</label>
+            <br></br>
+            <label>Lease Ends: {`${this.state.end_date}`}</label> 
+            <br></br>
+            <label>First Month's Rent: {`${this.state.firstMonthsRent}`}</label>
+            <br></br>
+            <label>Last Month's Rent: {`${this.state.lastMonthsRent}`}</label>
+            <br></br>
+            <label>Security Deposit: {`${this.state.securityDeposit}`}</label>         
+            <br></br>
+            <label>Balance: {`${this.state.balance}`}</label>     
+
+            </div>
         </div>
       </Fragment>
     );

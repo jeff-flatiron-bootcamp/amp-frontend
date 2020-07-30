@@ -6,16 +6,22 @@ import { connect } from 'react-redux';
 import './css/signin.css'
 
 class SignIn extends Component {
-  state = {
+  constructor() {
+  super();
+  //this.URL = "http://localhost:3000/api/v1/";
+  this.URL = "http://10.0.0.207:3000/api/v1/";
+  this.state = {
     nameLogin: "",
     passwordLogin: "",
     info: ""
   };
+}
 
   handleLogin = (event) => {
     event.preventDefault();
     const { nameLogin, passwordLogin } = this.state;
-    fetch("http://localhost:3000/api/v1/login", {
+    //fetch("http://localhost:3000/api/v1/login", {
+    fetch(`${this.URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,12 +56,12 @@ class SignIn extends Component {
           } else {
             this.props.history.push("/profile");
           }
-        }
-        else
-        {
-          let failMessage = `${json.statusmessage}. Please try again.`
-          this.setState({info: failMessage})
-        }
+          }
+          else
+          {
+            let failMessage = `${json.statusmessage}. Please try again.`
+            this.setState({info: failMessage})
+          }
       });
   };
 

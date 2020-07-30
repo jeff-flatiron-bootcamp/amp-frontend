@@ -4,7 +4,8 @@ import React, { Fragment, PureComponent } from "react";
 class PropertyAddress extends PureComponent {
     constructor(){
         super()
-        this.URL = "http://localhost:3000/api/v1/";
+        //this.URL = "http://localhost:3000/api/v1/";
+        this.URL = "http://10.0.0.207:3000/api/v1/";
         this.state = {
           streetAddress: "",
           apartment: "",

@@ -3,7 +3,9 @@ import React, { Fragment, PureComponent } from "react";
 class User extends PureComponent {
     constructor(){
         super()
-        this.URL = "http://localhost:3000/api/v1/users/";
+        //this.URL = "http://localhost:3000/api/v1/users/";
+        this.URLshow = "http://10.0.0.207:3000/api/v1/users/";
+        this.URLedit = "http://10.0.0.207:3000/api/v1/";
         this.state = {
           firstName: "",
           lastName: "",
@@ -18,7 +20,7 @@ class User extends PureComponent {
         console.log("Edited Profile to Save")    
         let token = localStorage.getItem('token');    
         
-        fetch(`${this.URL}update_profile`, {
+        fetch(`${this.URLedit}admin_update_profile`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -27,6 +29,7 @@ class User extends PureComponent {
             },
             body: JSON.stringify({
                 updated_profile_data: {
+                    id: this.props.match.params.id,
                     first_name: this.state.firstName,
                     last_name: this.state.lastName,
                     email: this.state.email,
@@ -55,7 +58,7 @@ class User extends PureComponent {
       requestProfileInfo = () => {        
         let token = localStorage.getItem('token');   
         let allPayments = []; 
-        fetch(`${this.URL}${this.props.match.params.id}`, {
+        fetch(`${this.URLshow}${this.props.match.params.id}`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`, 
@@ -72,7 +75,7 @@ class User extends PureComponent {
       }
     
       updateState = (userData) => {
-        
+        //debugger
         if(userData)
         {
           let firstName = userData.user.firstname ? userData.user.firstname : ""
@@ -104,7 +107,8 @@ class User extends PureComponent {
         return (
           <Fragment>          
              <div className="col-md-6 login-form-1">
-            <h3>Renter's Contact Information</h3>
+            <h3 className="content-title">Renter's Contact Information</h3>
+            <div className="profile-body">
             <form onSubmit={this.handleProfileEdits}>
               <div className="form-group">
                 <label>First Name *</label>
@@ -155,38 +159,12 @@ class User extends PureComponent {
                 <input type="submit" className="btnSubmit" value="Save Changes" />
               </div>
             </form>
+            </div>
             <label style={{ color: 'red' }}>{this.state.info}</label>
           </div>
           </Fragment>
         );
       }
     }
-    
 
-
-    
-//     constructor() {
-//         super();
-//         this.URL = "http://localhost:3000/api/v1/user";
-//       }
-
-//     getDetails = (id) => {
-
-//     }
-
-//     componentDidMount () {
-//         this.getAdminUser(this.props.match.params.id)
-//     }
-
-//   render() {
-//       debugger
-//     return (
-//       <Fragment>          
-//           <h3>User</h3>
-//           <h4>{this.props.location.pathname.slice(this.props.location.pathname.lastIndexOf("/")+1)}</h4>
-//       </Fragment>
-//     );
-//   }
-//}
-
-export default User//withRouter(SignOut);
+export default User

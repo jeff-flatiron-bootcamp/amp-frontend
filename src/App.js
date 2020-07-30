@@ -11,7 +11,6 @@ import Profile from './components/profile'
 import LoggedOut from './components/loggedOut'
 import AdminLease from './components/adminLeases'
 import RenterLease from './components/renterLease'
-import RenterPaymentHistory from './components/renterPaymentHistory'
 import RenterPostPayment from './components/renterPostPayment'
 import AdminPaymentHistory from './components/adminPaymentHistory'
 import AdminNewLease from './components/adminNewLease'
@@ -21,6 +20,7 @@ import User from './components/user'
 import Lease from './components/lease'
 import PropertyAddress from './components/propertyAddress'
 import { connect } from 'react-redux';
+import Community from "./components/community";
 
 class App extends Component {
   state = {
@@ -74,6 +74,7 @@ class App extends Component {
             <Route exact path="/Lease/:id" component={Lease} />
             <Route exact path="/property_address/:id" component={PropertyAddress} />
             <Route exact path="/admin_new_lease" render={(props) => <AdminNewLease {...props} /> }/>
+            <Route exact path="/community" component={Community}/>
             {/* <Route exact path="/"> <Redirect to="/login" /></Route> */}
             {/* <Route path="/login" component={Login} /> */}
             

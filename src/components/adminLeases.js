@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 class AdminLeases extends React.Component {
   constructor(props) {
     super(props);
-    this.URL = "http://localhost:3000/api/v1/";
+    //this.URL = "http://localhost:3000/api/v1/";
+    this.URL = "http://10.0.0.207:3000/api/v1/";
     this.state = {
       active: true,
       numberOfGuests: 2,
@@ -35,23 +36,53 @@ class AdminLeases extends React.Component {
     });    
   }
 
+  filterHandler = (event) => {
+    this.filterTables(true);
+  }
+
   filterTables(currValue)
   {
+    let sortHandlerAsc = () => {
+      this.sortRows(this.state.filteredLeases, true)
+    }
+    let sortHandlerDesc = () => {
+      this.sortRows(this.state.filteredLeases, false)
+    }
     //debugger
     if(currValue == true)
     {
       let filteredLeasesTemp = this.state.leases.filter(lease => lease.status == true)
       this.setState({
         filteredLeases: filteredLeasesTemp        
-      })
+      }, sortHandlerAsc)
     }
     else
     {      
       let filteredLeasesTemp = this.state.leases.filter(lease => lease.status == false)
       this.setState({
         filteredLeases: filteredLeasesTemp        
-      })
+      }, sortHandlerDesc)
     }
+  }
+
+  sortRows(data, direction) {  
+    //debugger
+    let sortedLeasesTemp = data.sort((curr, nextIter) => {
+        var a = curr.balance
+        var b = nextIter.balance
+        if(direction) //decending
+        {
+          return a < b ? 1 : -1
+        }
+        else          //ascending
+        {
+          return a < b ? -1 : 1
+        }
+        })
+        //debugger
+    this.setState({
+      filteredLeases: sortedLeasesTemp,
+    });
   }
 
   renderTableHeader() {      
@@ -79,7 +110,7 @@ class AdminLeases extends React.Component {
        return (
            <tr key={id}>
               <td><Link to={`/lease/${id}`} >{id}</Link></td>
-              <td><Link to={`/user/${user_id}`} >{user_id}</Link></td>              
+              <td><Link to={`/user/${user_id}`} >{user_id}</Link></td>       
               <td>{lease_type_id}</td>
               <td>{status.toString()}</td>
               <td>{monthly_rent_price}</td>
@@ -108,8 +139,7 @@ class AdminLeases extends React.Component {
       })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
-        //console.log(data.info)
+        console.log(data)        
         if(data.leases){
           allLeases = data.leases.map((lease) =>
           {
@@ -118,10 +148,8 @@ class AdminLeases extends React.Component {
         }
         //debugger
         console.log(allLeases)
-        this.setState({
-          leases: allLeases,
-      });
-      this.filterTables(!this.state.value);
+        //debugger
+        this.setState({ leases: allLeases }, this.filterHandler);      
       })
     }
 

@@ -4,10 +4,12 @@ import './css/createAccount.css'
 export default class CreateAccount extends Component {
     constructor(){
         super()
-        this.URL = "http://localhost:3000/api/v1/";
+        //this.URL = "http://localhost:3000/api/v1/";
+        this.URL = "http://10.0.0.207:3000/api/v1/";
         this.state = {
             nameSignup: "",
             passwordSignup: "",
+            info: ""
         };
       }
 
@@ -42,6 +44,10 @@ export default class CreateAccount extends Component {
           } else {
             this.props.history.push("/profile");
           }
+        }
+        else{
+          let failMessage = `${json.statusmessage}. Please try again.`
+          this.setState({info: failMessage})
         }
       });//(json) => this.storeToken(json));
   };
@@ -81,6 +87,7 @@ export default class CreateAccount extends Component {
           <div className="form-group">
             <input type="submit" className="btnSubmit" value="Create Account" />
           </div>
+          <label style={{ color: 'red' }}>{this.state.info}</label>
         </form>
       </div>
     );

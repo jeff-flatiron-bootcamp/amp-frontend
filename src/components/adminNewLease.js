@@ -7,7 +7,8 @@ import CurrencyInput from "react-currency-input";
 class AdminNewLease extends React.Component {
   constructor() {
     super();
-    this.URL = "http://localhost:3000/api/v1/";
+    //this.URL = "http://localhost:3000/api/v1/";
+    this.URL = "http://10.0.0.207:3000/api/v1/";
 
     this.defaultUser = {
       id: 0,
@@ -246,10 +247,11 @@ class AdminNewLease extends React.Component {
       .then((data) => {
         console.log(data);
 
-        if (data.status != 200) {
-          let failMessage = `${data.info}. Please try again.`;
-          this.setState({ info: failMessage });
-        }
+        let resultMessage = `${data.statusmessage}`;
+          this.setState({ info: resultMessage });
+        // if (data.status != 200) {
+          
+        // }
       });
   };
 
@@ -364,9 +366,9 @@ class AdminNewLease extends React.Component {
             </div>
             <label style={{ color: "red" }}>{this.state.info}</label>
           </form>
-          <button onClick={this.returnToLeases} disabled="true">
+          {/* <button onClick={this.returnToLeases} disabled="true">
             Cancel
-          </button>
+          </button> */}
         </div>
       </Fragment>
     );

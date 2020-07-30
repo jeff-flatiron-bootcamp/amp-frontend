@@ -1,9 +1,11 @@
 import React, { Fragment, PureComponent } from "react";
+import './css/profile.css'
 
 class Profile extends PureComponent {
   constructor(){
     super()
-    this.URL = "http://localhost:3000/api/v1/";
+    //this.URL = "http://localhost:3000/api/v1/";
+    this.URL = "http://10.0.0.207:3000/api/v1/";
     this.state = {
       firstName: "",
       lastName: "",
@@ -102,7 +104,8 @@ class Profile extends PureComponent {
     return (
       <Fragment>          
          <div className="col-md-6 login-form-1">
-        <h3>My Profile</h3>
+        <h3 className="content-title">My Profile</h3>
+        <div className="profile-body">
         <form onSubmit={this.handleProfileEdits}>
           <div className="form-group">
             <label>First Name *</label>
@@ -153,6 +156,7 @@ class Profile extends PureComponent {
             <input type="submit" className="btnSubmit" value="Save Changes" />
           </div>
         </form>
+        </div>
         <label style={{ color: 'red' }}>{this.state.info}</label>
       </div>
       </Fragment>

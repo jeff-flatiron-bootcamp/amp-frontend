@@ -5,7 +5,8 @@ class AdminPaymentHistory extends React.Component {
 
   constructor(props) {
     super(props);
-    this.URL = "http://localhost:3000/api/v1/";
+    //this.URL = "http://localhost:3000/api/v1/";
+    this.URL = "http://10.0.0.207:3000/api/v1/";
     this.state = {
       active: true,      
       payments: [],
@@ -62,11 +63,13 @@ class AdminPaymentHistory extends React.Component {
         {
           return payment;
         });
-      }             
+      }
+      let sortCallback = () => {
+        this.sortRows(this.state.payments, true)
+      }          
       this.setState({
         payments: allPayments,
-      }, this.sortRows(this.state.payments, true));
-      
+      }, sortCallback);      
     })
   }
 
@@ -93,7 +96,7 @@ class AdminPaymentHistory extends React.Component {
     return this.state.users.map((user) => <option key={user.id} value={user.id}>{`${user.id}-${user.username}-${user.firstname} ${user.lastname}`}</option>)
   }
 
-  handleUserSelection = (e) => {
+  handleUserSelection = (e) => {    
     this.setState({selectedUser:e.target.value}, this.adminGetPaymentHistoryForUser);    
   }
 
@@ -125,8 +128,7 @@ class AdminPaymentHistory extends React.Component {
     }
 
   componentDidMount(){
-    this.adminGetAllUsers();
-    //this.adminGetAllPayments();
+    this.adminGetAllUsers();    
   }
 
   userCheck()
@@ -142,7 +144,7 @@ class AdminPaymentHistory extends React.Component {
     return (
       <Fragment>  
         <div className="lease_container" display="flex" flex-direction="column">
-          <h3 className="contentTitle" >Payment History</h3>                              
+          <h3 className="content-title" >Payment History</h3>                              
           <select className="userSelect" value={this.state.selected_user} onChange={this.handleUserSelection}>{this.populateUsers()}</select>    
           <br></br>     
           <br></br>   

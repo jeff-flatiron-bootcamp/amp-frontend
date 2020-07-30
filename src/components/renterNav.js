@@ -51,10 +51,10 @@ class RenterNav extends PureComponent {
           </NavLink>
         </h5>
         <h5>
-          <NavLink activeStyle={{color: "black"}} style={{ color: "white" }} to="/community_docs">          
-            Community Docs
+          <NavLink activeStyle={{color: "black"}} style={{ color: "white" }} to="/community">
+            Community
           </NavLink>
-        </h5>
+        </h5>        
         <h5>                      
           {/* <button onClick={this.handleSignOut}>SignOut</button> */}
           <label onMouseOver={this.handleHoverLabel} onMouseLeave={this.handleMouseLeaveLabel} onClick={this.handleSignOut} style={labelStyles}>Sign Out</label>

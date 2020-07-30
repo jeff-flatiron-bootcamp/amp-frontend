@@ -8,7 +8,8 @@ import './css/renterPostPayment.css'
 class RenterPostPayment extends React.Component {
   constructor() {
     super();
-    this.URL = "http://localhost:3000/api/v1/";
+    //this.URL = "http://localhost:3000/api/v1/";
+    this.URL = "http://10.0.0.207:3000/api/v1/";
     this.state = {
       fullNameOnCC: "",
       ccn: "",
@@ -43,7 +44,7 @@ class RenterPostPayment extends React.Component {
         this.setState({
           payments: allPayments,
         });
-        this.filterTables(!this.state.value);
+        this.sortTables(true);
       });
   }
 
@@ -51,11 +52,17 @@ class RenterPostPayment extends React.Component {
     this.props.history.push("/admin_new_lease");
   };
 
-  filterTables(currValue) {        
+  sortTables(currValue) {        
     let sortedPaymentsTemp = this.state.payments.sort((curr, nextIter) => {
         var a = Date.parse(curr.created_at);
-        var b = Date.parse(nextIter.created_at);        
+        var b = Date.parse(nextIter.created_at); 
+        if(currValue)
+        {       
         return a < b ? 1 : -1
+        }
+        else{
+          return a < b ? -1 : 1
+        }
         })
 
     this.setState({

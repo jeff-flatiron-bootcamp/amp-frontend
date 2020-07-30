@@ -64,6 +64,11 @@ class AdminNav extends PureComponent {
             Documents
           </NavLink>
         </h5>
+        <h5>
+          <NavLink activeStyle={{color: "black"}} style={{ color: "white" }} to="/community">
+            Community
+          </NavLink>
+        </h5>
         <h5>        
               {/* <button onClick={this.props.onSignOut}>SignOut</button> */}
               <label onMouseOver={this.handleHoverLabel} onMouseLeave={this.handleMouseLeaveLabel} onClick={this.handleSignOut} style={labelStyles}>Sign Out</label>
